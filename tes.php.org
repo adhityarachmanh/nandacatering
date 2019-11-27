@@ -1,0 +1,108 @@
+    <div id="keranjang" class="modal" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;"><div class="cart-container" id="cart-container">
+    <div class="cart-header">
+        <button type="button"  class="close-cart" aria-label="Close" tab-index="-1">
+            <span aria-hidden="true" class="fa fa-times"></span>
+        </button>
+        <h3 class="my-order">My Order</h3>
+    </div>
+    <div class="cart-inner-container">
+                <div class="cart-wrapper">
+                    <div class="">
+                        <section class="item-header">
+                            <div class="container cart-item" id="cart-item">
+                                <div class="col-30">
+                                    <img src="./Chicken Finger Plate - Most Popular Meals - Menu _ Zaxby&#39;s_files/image" class="float cart-thumb"> 
+                                    <input data-entry-id="0" class="quantity float cartQty" type="number" min="1" max="99" value="1" maxlength="2" pattern="\d+" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57">
+                                </div>
+
+                                <!--Item details -->
+                                <div class="col-70">
+                                    <p class="item-name">Chicken Finger Plate</p>
+                                    <p class="price"><span class="display-price to-fixed">$7.99</span></p>  
+                                    <span class="hidden og-price">7.99</span>
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-70 right">
+                    <div class="primary-choice">
+                        <h4>Chicken Finger Plate - 4 Fingers</h4>
+                    </div>
+                                            <div class="col-70 toggler details-toggler" data-toggle="toggled">Details <span class="fa fa-angle-up"></span></div>
+                    <div class="col-15"><a class="edit-cart-item" data-entry-id="0">Edit</a></div>
+                    <div class="col-15"><a class="remove-cart-item in-cart-view" data-entry-id="0">Remove</a></div>
+                    <div class="toggled">
+                                <div class="col-70">Toast
+                                </div>
+                                <div class="col-30 text-right second-price">$0.00</div>
+                                <div class="col-70">Zax Sauce®
+                                </div>
+                                <div class="col-30 text-right second-price">$0.00</div>
+                                <div class="col-70">Crinkle Fries
+                                </div>
+                                <div class="col-30 text-right second-price">$0.00</div>
+                                <div class="col-70">Coleslaw
+                                </div>
+                                <div class="col-30 text-right second-price">$0.00</div>
+                                <div class="col-70">Drink - 22oz
+                                </div>
+                                <div class="col-30 text-right second-price">$0.00</div>
+                    </div>
+
+                    </div>
+                </div>
+            <div class="buffer"></div>
+            <div class="col-70 right final-totals">
+                <div class="container">
+                    <div class="col col-8 text-right">
+                        Subtotal*
+                    </div>
+                    <div class="col col-4 text-right subtotal to-fixed">$7.99</div>
+                </div>
+                <div class="container">
+                    <div class="col col-12 text-right excludes-tax">
+                        *Excludes tax
+                    </div>
+                </div>
+                
+            </div>
+            <form method="post" action="https://www.zaxbys.com/checkout/" id="checkout-form">
+                <div class="button-wrapper full-wrap">
+                    <button class="button-beige clear-cart">CLEAR CART</button>
+                    <button class="button-red check-out">CHECK OUT</button>
+                </div>
+                <input type="hidden" name="storeId" value="58904">
+                <input type="hidden" name="orderId" value="0">
+                        <input type="hidden" name="cart.Contents[0].ItemID" value="121284183">
+                        <input type="hidden" name="cart.Contents[0].Quantity" value="1">
+                        <input type="hidden" name="cart.Contents[0].EntryID" value="0">
+                        <input type="hidden" name="cart.Contents[0].Price" value="7.99">
+                            <input type="hidden" name="cart.Contents[0].Options[0]" value="121284183">
+                            <input type="hidden" name="cart.Contents[0].Options[1]" value="5875289744">
+                            <input type="hidden" name="cart.Contents[0].Options[2]" value="5875289760">
+                            <input type="hidden" name="cart.Contents[0].Options[3]" value="5875289841">
+                            <input type="hidden" name="cart.Contents[0].Options[4]" value="5875289873">
+                            <input type="hidden" name="cart.Contents[0].Options[5]" value="5875301176">
+
+            </form>
+
+    </div>
+</div>
+    <script>
+        Zaxbys.UserInfo.OrderID = 0;
+        $(function () {
+            $('.cart-container .second-price').each(function () {
+                var curVal = parseFloat($(this).text());
+                var newVal = curVal.toFixed(2);
+                $(this).text('$' + newVal);
+            });
+            $('.cart-container .to-fixed').each(function () {
+                var price = $(this).html(),
+                    priceFix = parseFloat(Math.round(price * 100) / 100).toFixed(2);
+                //console.log(price, priceFix);
+                $(this).html('$' + priceFix);
+            });
+        })
+    </script>

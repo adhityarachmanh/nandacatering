@@ -1,0 +1,95 @@
+
+<?php
+session_start();
+ if (isset($_POST['login'])){
+	include_once'conn.php';
+	$uid = mysqli_real_escape_string($db, $_POST['uid']);
+  $pwd = mysqli_real_escape_string($db, $_POST['pwd']);
+  $halaman = mysqli_real_escape_string($db, $_POST['halaman']);
+
+	if(empty($uid) || empty($pwd)){
+		$a=explode("?",$halaman);
+					if($a['1']=1)
+					{
+						
+						header('Location: ../'.$a['0']."?".$s['0']."&".$s['1'].'&status=kosong');
+					}elseif(empty($a['1']))
+					{
+						header('Location: ../'.$a['0'].'?status=kosong');
+						
+					}	
+					
+		exit();
+
+	}else{
+		$sql="SELECT * FROM users WHERE user_uid='$uid' OR user_email='$uid'";
+		$result = mysqli_query($db, $sql);
+		$resultcheck = mysqli_num_rows($result);
+		
+		
+		if ($resultcheck <1) {
+			$a=explode("?",$halaman);
+			$s=explode("&",$a['1']);
+
+		if($a['1']=1)
+		{
+			
+			header('Location: ../'.$a['0']."?".$s['0']."&".$s['1'].'&status=usernametidakada');
+		}elseif(empty($a['1']))
+		{
+			header('Location: ../'.$a['0'].'?status=usernametidakada');
+			
+		}	
+			exit();
+		}else{
+			if ($row = mysqli_fetch_assoc($result)) {
+				$hashedpwdcheck = password_verify($pwd, $row['user_pwd']);
+				if ($hashedpwdcheck == false) {
+					$a=explode("?",$halaman);
+					if($a['1']=1)
+					{
+						
+						header('Location: ../'.$a['0']."?".$s['0']."&".$s['1'].'&status=passwordsalah');
+					}elseif(empty($a['1']))
+					{
+						header('Location: ../'.$a['0'].'?status=passwordsalah');
+						
+					}	
+					
+					exit();
+				}elseif ($hashedpwdcheck == true){
+					$_SESSION['uid'] = $row['id'];
+					$_SESSION['u_first'] = $row['user_first'];
+					$_SESSION['u_last'] = $row['user_last'];
+					$_SESSION['u_email'] = $row['user_email'];
+					$_SESSION['u_uid']=$row['user_uid'];
+					$_SESSION['u_pwd']=$row['user_pwd'];
+					$_SESSION['u_rpwd']=$row['user_rpwd'];
+					$_SESSION['u_foto']=$row['fotouser'];
+					$_SESSION['u_telp']=$row['notelp'];
+					$_SESSION['pin']=$row['kodepin'];
+				
+						$a=explode("?",$halaman);
+						if($a['1']=1)
+						{
+							
+							header('Location: ../'.$a['0']."?".$s['0']."&".$s['1'].'&status=berhasil');
+						}elseif(empty($a['1']))
+						{
+							header('Location: ../'.$a['0'].'?status=berhasil');
+							
+						}	
+						
+					exit();
+				
+		
+				}
+			
+			}
+		}
+	}
+}else{
+		header("Location: ../index.php?status=error");
+		exit();
+}
+?>

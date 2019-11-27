@@ -1,0 +1,99 @@
+
+<div style="overflow: auto; display:<?php
+$notif="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    if (strpos($notif,"status=berhasil")== true) {
+        echo "none;";
+    }elseif(strpos($notif,"status=logout")== true) {
+        echo "none;";
+    }elseif(strpos($notif,"status=")== true) {
+        echo "block;";
+    }elseif(strpos($notif,"cart=")== true) {
+        echo "none;";
+    }
+   
+?>" class="modal" id="login" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--Belum Login-->
+            <div class="modal-header <?php if ($_SESSION['uid']) {echo "hidden";}else{echo "";} ?>">
+                <h3>Log In </h3>
+                <button type="button" class="close" onclick="document.getElementById('login').style.display='none'">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Udah Login-->
+             <div class="modal-header <?php if ($_SESSION['uid']) {echo "";}else{echo "hidden";} ?>">
+                <h3 class="headline text-center">Profil<span><?php if ($_SESSION['u_uid']=="admin"){echo" Admin";}else{echo " ".$_SESSION['u_first'];} ?></span></h3>
+                <button type="button" class="close" onclick="document.getElementById('login').style.display='none'">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <!--Foto-->
+            <div class="container">
+  <img style="margin: 0 15%;" src="<?php 
+  require_once('inc/login.php');  
+$username=$_SESSION['u_uid'];
+$muncul=$db->query("SELECT * FROM users where user_uid='$username'");?>
+<?php while ($gas = $muncul->fetch_assoc()) { ?><?php if (isset($_SESSION['uid'])) {if(count($_SESSION['u_foto'])==0){ echo 'img/defaultfoto.png';}elseif(count($_SESSION['u_foto'])>0){echo "imgevent/fotouser/".$gas['fotouser'];}}?><?php }?>" class="img-circle" width="70%" height="400" >
+</div>
+            </div>
+            <!--Udah Login-->
+            <div class="modal-body <?php if ($_SESSION['uid']) {echo "";}else{echo "hidden";} ?>">
+                <h4 class="headline text-center"> <?php if ($_SESSION['u_uid']=="admin") {echo " &#9813;";}else{echo "";} ?> Selamat Datang</h4>
+                <h4 class="headline text-center"><?php if ($_SESSION['uid'])  {echo $_SESSION['u_first']." ".$_SESSION['u_last'];} ?></h4>
+               
+            </div>
+            <!--Belum Login-->
+            <div class="modal-body <?php if ($_SESSION['uid']) {echo "hidden";}else{echo "";} ?>">
+                <form class="login-form login-hide" method="post" action="inc/login.inc.php">
+                    <input type="text" name="uid" placeholder="Username" >
+                    <p style="display:<?php
+$notif="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    if (strpos($notif,"status=usernametidakada")== true) {
+        echo "block;";}?>;" id="user-exists">Username Anda Tidak Terdaftar</p>
+                    <input type="password" name="pwd" placeholder="Password" >
+                    <p style="display:<?php
+$notif="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    if (strpos($notif,"status=passwordsalah")== true) {
+        echo "block;";}?>;" id="user-exists">Password Anda Salah</p>
+                    <input type="hidden" name="halaman"  value="<?php $a=$_SERVER['REQUEST_URI']; $b=explode("/",$a); echo $b['3']; ?>">
+  
+            </div>
+            <!--Belum Login-->
+            <div class="modal-footer <?php if ($_SESSION['uid']) {echo "hidden";}else{echo "";} ?>">
+               
+            <a href="#" onclick="document.getElementById('login').style.display='none'"  class="btn btn-secondary">Close</a>
+              
+                <button type="submit" class="btn btn-primary login-button" name="login">Login</button>
+               
+
+            </form>
+                <p class="login-note">Belum memiliki Akun?<br><a href="#" style="font-weight: bolder;" class="sign-instead" onclick="document.getElementById('daftar').style.display='block',document.getElementById('login').style.display='none'">Daftar</a> unntuk akun baru anda</p>
+            </div>
+            <!--Udah Login-->
+            <div class="modal-footer <?php if ($_SESSION['uid']) {echo "";}else{echo "hidden";} ?>">
+                <button onclick="document.getElementById('editprofil').style.display='block',document.getElementById('login').style.display='none'" type="button" class="btn btn-success">Edit Profil</button>
+                <a href="akun.php" class="btn btn-secondary">History Order</a>
+                <br><br>
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Kumpulan Resep</button>
+                <a href="hubungikami.php" class="btn btn-warning">Hubungi Kami</a>
+               <?php if ($_SESSION['u_uid']=="admin") {echo " <br><br>";}else{echo "";} ?>
+                 <a href="admin/dashboard.php" class="btn btn-success <?php if ($_SESSION['u_uid']=="admin") {echo "";}else{echo "hidden";} ?>">&#9813; Dashboard</a>
+                <br><br>
+                <form method="post" action="inc/logout.inc.php">
+                <input type="hidden" name="halaman"  value="<?php $a=$_SERVER['REQUEST_URI']; $b=explode("/",$a); echo $b['3']; ?>">
+                <button name="logout" type="submit" class="btn btn-primary">Logout</button>
+</form>
+            </div>
+        </div>
+        <div class="modal-content submitted-div">
+            <div class="modal-header">
+                <h5 class="modal-title" id="login-form-label">An email has been sent</h5>
+               
+                    <span aria-hidden="true">&times;</span>
+            
+            </div>
+            
+           
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<?php
+
+if(isset($_POST['logout'])){
+	$halaman=$_POST['halaman'];
+	session_start();
+	session_unset();
+	session_destroy();
+	$a=explode("?",$halaman);
+					if($a['1']=1)
+					{
+						
+						header('Location: ../'.$a['0']."?".$s['0']."&".$s['1'].'&status=logout');
+					}elseif(empty($a['1']))
+					{
+						header('Location: ../'.$a['0'].$s['0']."&".$s['1'].'?status=logout');
+						
+					}	
+					
+	exit();
+	
+}else{
+	$halaman=$_GET['halaman'];
+	session_start();
+	session_unset();
+	session_destroy();
+	$a=explode("?",$halaman);
+					if($a['1']=1)
+					{
+						
+						header('Location: ../'.$a['0']."?".$s['0']."&".$s['1'].'&status=logout');
+					}elseif(empty($a['1']))
+					{
+						header('Location: ../'.$a['0'].$s['0']."&".$s['1'].'?status=logout');
+						
+					}	
+					
+	exit();
+}	
+?>

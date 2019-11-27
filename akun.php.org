@@ -1,0 +1,59 @@
+<?php 
+session_start();
+if($_SESSION['uid']){echo"";}else{echo "<script>location='index.php';</script>";}?>
+<?php include'inc/cart.inc.php'?>
+<!DOCTYPE html>
+<html  xml:lang="en" lang="en">
+<head>
+<title> Nanda Catering&#39;s - Kelezatan dan Citarasa yang Berbeda</title>
+    <?php include'head.php';?>
+</head>
+
+<?php include'header.php';?>
+<!-- ==== Scripts ====-->
+
+   <div id="bodyholder">
+            
+
+
+            <div class="main-wrp account-views">
+                <div class="ctn-wrp">
+                    <div class="my-account">
+                        <div class="col col-2 account-nav">
+                            <a href="index.html" class="">Order History</a>
+                            <a href="akun.php?akun=info" class="">Info Akun</a>
+                            <a href="../payment/index.html" class="">Payment</a>
+                            <!--<a href="~/account/gift-cards/" class="atsymbol AddSelectedClass("gift-cards")">Gift Cards</a>-->
+                        </div>
+                        <div class="col col-10 account-content">
+                        <?php
+        if (isset($_GET['akun'])) 
+        {
+            if ($_GET['akun']=="info") 
+            {
+                include 'updateprofil.php';
+            }
+           
+           }else
+        {
+            
+        }       
+        ?>
+             </div>    
+                    </div>
+                </div>
+            </div>
+    
+            </div>
+            
+      
+     
+
+        
+    </div>
+
+   <?php include'footer.php';?>
+</body>
+
+
+</html>

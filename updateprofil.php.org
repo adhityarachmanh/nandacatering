@@ -1,0 +1,193 @@
+
+<h2><?php echo $_SESSION['u_uid']; echo $a=$_POST['pwdlama']; echo $b=$_SESSION['u_rpwd'];   if($a==$b)
+                {echo"iya";}else{echo"tidak";}?></h2>
+        <form method="post">
+            <br>
+            <img src="<?php if (isset($_SESSION['uid'])) {if(count($_SESSION['u_foto'])==0){ echo 'img/defaultfoto.png';}elseif(count($_SESSION['u_foto'])>0){echo "imgevent/fotouser/".$_SESSION['u_foto'];}}?>" class="img-rounded" width="70%" height="400" >
+            <div class="form-group">
+                    <label>Ganti Foto </label>
+                    <input type="file" name="foto" class="form-control" id="foto" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" data-error="At least 8 characters and 1 number. No special characters.">
+                    <div class="help-block with-errors"></div>
+        
+                </div>
+            <br>
+            <div class="form-group current-user-info <?php if($_POST['pin']==$_SESSION['pin']){echo "hidden";}else{echo "";}?>" >
+                <p class="user-email"><span>Username:</span> <?php echo $_SESSION['u_email']?></p>
+                <p class="user-email"><span>Password: </span> **********</p>
+              
+                <div class="form-group" style="display:none;" id="konfirm">
+                <p style="display:block; background:green;" id="user-exists">Masukkan Pin Anda Untuk Ganti Password</p>
+            
+                    <input type="password" name="pin" value="" class="form-control" id="curr-password">
+                    <p style="display:<?php if(isset($_POST['pin'])){if($_POST['pin']!==$_SESSION['pin']){echo "block";}}else{echo"none";}?>;" id="user-exists">Pin Anda Salah</p>
+                </div>
+                <div class="button-wrapper">
+                    
+                    <a href="#" id="updtpass" onclick="document.getElementById('updtpass').style.display='none',document.getElementById('konfirm').style.display='block',document.getElementById('okpin').style.display='block'" class="button-red button-fluid">Update Password</a>
+                    <button id="okpin" class="button-red button-fluid" type="submit" style="display:none;">OK</button>
+                </div>
+            </div>
+         
+            <h3></h3>
+            <div class="pass-info" style="display:<?php if($_POST['pin']==$_SESSION['pin']){echo "block";}else{echo "none";}?>">
+            <p style="display:<?php if(isset($_POST['pin'])){if($_POST['pin']==$_SESSION['pin']){echo "block";}}else{echo"none";}?>; background:green;" id="user-exists">Pin Anda Benar Silahkan Ganti Password Anda</p>
+                 <div class="form-group">
+                <p class="user-email"><span>Password Anda: </span> <?php echo substr($_SESSION['u_rpwd'], 0, 4);?>******</p>
+                    <label>Password Lama Anda</label>
+                    <input type="password" name="pwdlama" value="" class="form-control" >  
+                </div>
+                <div class="form-group">
+                    <label>Password Baru Anda </label>
+                    <input type="password" name="newpwd" class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" >
+                    <div class="help-block with-errors"></div>
+    
+                </div>
+                <div class="form-group">
+                    <label>Re-type New Password </label>
+                    <input type="password" name="rpwd" class="form-control"  >
+                    <div class="help-block with-errors"></div>
+                 
+                </div>
+                <div class="button-wrapper">
+                <input name="gantipass" type="submit" value="gantipass" class="button-red">
+            </div>
+            </div>
+       
+            <?php
+            if(isset($_POST['gantipass'])){
+                require_once('inc/conn.php');
+                $user=$_SESSION['u_uid'];
+                $pwdlogin=$_SESSION['u_rpwd'];
+                $pwdlama=$_POST['pwdlama'];
+                $pwdbaru=$_POST['newpwd'];
+                $ulangpwd=$_POST['rpwd'];
+                $hashedpwd = password_hash($pwdbaru, PASSWORD_DEFAULT);
+                $db->query("UPDATE users set user_pwd='$hashedpwd', user_rpwd='$ulangpwd' WHERE user_uid='$user'");
+                echo "<script>location='akun.php?akun=info&password=berhasil';</script>";
+                exit();
+             
+                      
+                
+            }
+            ?>
+           
+            <div class="form-group">
+          
+                <label>First Name*</label>
+                <input type="text" name="firstName" value="adit" required="" class="form-control" pattern="[a-zA-Z]*" data-error="Please enter your first name. No numbers please.">
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label>Last Name*</label>
+                <input type="text" name="lastName" value="rad" required="" class="form-control" pattern="[a-zA-Z]*" data-error="Please enter your first name. No numbers please.">
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label>Address 1</label>
+                <input type="text" name="address1" id="acc-add1" class="form-control" placeholder="Street" data-error="When saving an address please enter address, city and state.">
+                    <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <label>Address 2</label>
+                <input type="text" name="address2" class="form-control" placeholder="Apt or Unit No">
+            </div>
+            <div class="ctn-wrp">
+                <div class="form-group col col-6">
+                    <label>City</label>
+                    <input type="text" name="city" id="acc-city" class="form-control" data-error="City and state required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group col col-6">
+                    <label>State</label>
+                    <select name="state" class="form-control" id="acc-state"><option value="">-- Select State --</option>
+    <option value="AL">Alabama</option>
+    <option value="AK">Alaska</option>
+    <option value="AZ">Arizona</option>
+    <option value="AR">Arkansas</option>
+    <option value="CA">California</option>
+    <option value="CO">Colorado</option>
+    <option value="CT">Connecticut</option>
+    <option value="DE">Delaware</option>
+    <option value="DC">District of Columbia</option>
+    <option value="FL">Florida</option>
+    <option value="GA">Georgia</option>
+    <option value="HI">Hawaii</option>
+    <option value="ID">Idaho</option>
+    <option value="IL">Illinois</option>
+    <option value="IN">Indiana</option>
+    <option value="IA">Iowa</option>
+    <option value="KS">Kansas</option>
+    <option value="KY">Kentucky</option>
+    <option value="LA">Louisiana</option>
+    <option value="ME">Maine</option>
+    <option value="MD">Maryland</option>
+    <option value="MA">Massachusetts</option>
+    <option value="MI">Michigan</option>
+    <option value="MN">Minnesota</option>
+    <option value="MS">Mississippi</option>
+    <option value="MO">Missouri</option>
+    <option value="MT">Montana</option>
+    <option value="NE">Nebraska</option>
+    <option value="NV">Nevada</option>
+    <option value="NH">New Hampshire</option>
+    <option value="NJ">New Jersey</option>
+    <option value="NM">New Mexico</option>
+    <option value="NY">New York</option>
+    <option value="NC">North Carolina</option>
+    <option value="ND">North Dakota</option>
+    <option value="OH">Ohio</option>
+    <option value="OK">Oklahoma</option>
+    <option value="OR">Oregon</option>
+    <option value="PA">Pennsylvania</option>
+    <option value="RI">Rhode Island</option>
+    <option value="SC">South Carolina</option>
+    <option value="SD">South Dakota</option>
+    <option value="TN">Tennessee</option>
+    <option value="TX">Texas</option>
+    <option value="UT">Utah</option>
+    <option value="VT">Vermont</option>
+    <option value="VA">Virginia</option>
+    <option value="WA">Washington</option>
+    <option value="WV">West Virginia</option>
+    <option value="WI">Wisconsin</option>
+    <option value="WY">Wyoming</option>
+    </select>
+                 
+                </div>
+            </div>
+            <div class="ctn-wrp">
+                <div class="form-group col col-6">
+                    <label>Phone</label>
+                    <input type="tel" name="phone" value="412-412-4214" pattern="\d{3}[\-]\d{3}[\-]\d{4}" class="form-control" max-length="13" data-error="Enter a 10 digit phone number (xxx-xxx-xxxx).">
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group col col-6">
+                    <label>Zip Code</label>
+                    <input type="text" name="zip" value="10310" class="form-control" pattern="[0-9]{5}">
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <input id="TextOptIn" name="TextOptIn" type="hidden" value="True">
+                <label>Sign up for exciting news, promotions and more straight to your inbox!</label>
+                <div class="ctn-wrp">
+                    <label>
+                        <input checked="checked" id="EmailOptInYes" name="EmailOptIn" type="radio" value="True">
+                        <span>&nbsp;Yes, please!</span>
+                    </label>
+                    <span>&nbsp;&nbsp;</span>
+                    <label>
+                        <input id="EmailOptInNo" name="EmailOptIn" type="radio" value="False">
+                        <span>&nbsp;No, thanks.</span>
+                    </label>
+                </div>
+            </div>
+           
+            <div class="button-wrapper">
+                <input type="submit" value="Submit" class="button-red" id="my-info-submit">
+            </div>
+            <div class="update-info-success">
+                
+            </div>
+        </form>
+    

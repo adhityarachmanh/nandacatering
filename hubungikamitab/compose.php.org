@@ -1,0 +1,85 @@
+<div class="col-md-9">
+<form method="post">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Tulis Pesan</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="form-group">
+                <input name="untuk" class="form-control" <?php if($_SESSION['u_uid']=="admin"){echo "";}else{echo "readonly=''";}?> value="<?php if($_GET['action']=="balas"){echo $_GET['dari'];}elseif($_SESSION['u_uid']=="admin"){echo "";}else{echo"admin";} ?>">
+              </div>
+              <div class="form-group">
+                <input class="form-control" placeholder="Subject:" name="subjek">
+              </div>
+              <div class="form-group">
+              <textarea id="compose-textarea" class="form-control" style="height: 300px" name="isi">
+                      <h1><u>Heading Of Message</u></h1>
+                      <h4>Subheading</h4>
+                      <p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain
+                        was born and I will give you a complete account of the system, and expound the actual teachings
+                        of the great explorer of the truth, the master-builder of human happiness. No one rejects,
+                        dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know
+                        how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again
+                        is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain,
+                        but because occasionally circumstances occur in which toil and pain can procure him some great
+                        pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise,
+                        except to obtain some advantage from it? But who has any right to find fault with a man who
+                        chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that
+                        produces no resultant pleasure? On the other hand, we denounce with righteous indignation and
+                        dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so
+                        blinded by desire, that they cannot foresee</p>
+                      <ul>
+                        <li>List item one</li>
+                        <li>List item two</li>
+                        <li>List item three</li>
+                        <li>List item four</li>
+                      </ul>
+                      <p>Thank you,</p>
+                      <p>John Doe</p>
+                    </textarea>
+                    <input type="hidden" name="dari" value="<?php echo $_SESSION['u_uid']?>">
+              </div>
+              <div class="form-group">
+                <div class="btn btn-default btn-file">
+                  <i class="fa fa-paperclip"></i> Attachment
+                  <input type="file" name="berkas">
+                </div>
+                <p class="help-block">Max. 32MB</p>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <div class="pull-right">
+               
+                <button name="kirimpesan" onclick="return confirm('Yakin Pesan Sudah Benar?')" type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+              </div>
+              
+            </div>
+            <!-- /.box-footer -->
+          </div>
+          <!-- /. box -->
+          </form>
+        </div>
+        <?php
+$hub=new mysqli("localhost","root","","admin");
+if (isset($_POST['kirimpesan'])) {
+  $untuk=$_POST['untuk'];
+   $dari=$_POST['dari'];
+
+  $subjek=$_POST['subjek'];
+  $isi=$_POST['isi'];
+  $nama= $_FILES['berkas']['name'];
+  $tempat= $_FILES['berkas']['tmp_name'];
+  $fileext=explode('.', $nama);
+  $fileactualext=strtolower(end($fileext));
+  $filenamenew = "berkas".$dari.".".$fileactualext;
+    $filedestination = 'imgevent/'.$filenamenew;
+    move_uploaded_file($tempat, $filedestination);
+    $hub->query("INSERT INTO pesan
+  (untuk,dari,subjek,isi,berkas) VALUES ('$untuk','$dari','$subjek','$isi','$nama')");
+   
+    echo "<script>location='hubungikami.php?pesan=pesanterkirim';</script>";
+  }
+ 
+?>

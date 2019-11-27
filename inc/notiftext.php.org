@@ -1,0 +1,46 @@
+<?php
+$notif="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    if (strpos($notif,"status=kosong")== true) {
+        echo "Isi Data Anda";
+    }
+    elseif (strpos($notif,"status=usernametidakada")== true) {
+        echo "Username Tidak Terdaftar";
+    }
+    elseif (strpos($notif,"status=berhasil")== true) {
+        echo "Login Berhasil";
+    }elseif (strpos($notif,"status=passwordsalah")== true) {
+        echo "Password Anda Salah";
+    }elseif (strpos($notif,"status=logout")== true) {
+        echo "Anda Telah Logout";
+    }elseif (strpos($notif,"cartada=ada")== true) {
+        echo "Barang Sudah Ada di Keranjang";
+    }elseif (strpos($notif,"cart=ditambahkan")== true) {
+        echo "Barang Telah Ditambahkan Kedalam Keranjang";
+    }elseif (strpos($notif,"cart=hapus")== true) {
+        echo "Barang Telah Terhapus Dari Keranjang";
+    }elseif (strpos($notif,"cart=checkout")== true) {
+        echo "Pesanan Telah Di Proses";
+    }elseif (strpos($notif,"cart=all")== true) {
+        echo "Semua Barang Telah Terhapus";
+    }elseif (strpos($notif,"register=syaratnama")== true) {
+        echo "Nama Anda Tidak Sesuai Persyaratan";
+    }elseif (strpos($notif,"register=syarattlp")== true) {
+        echo "Nomer Telpon Anda Tidak Sesuai";
+    }elseif (strpos($notif,"register=syaratemailada")== true) {
+        echo "Email Telah Digunakan Orang Lain";
+    }elseif (strpos($notif,"register=syaratpwd")== true) {
+        echo "Password Anda Tidak Sesuai";
+    }elseif (strpos($notif,"register=syaratrpwd")== true) {
+        echo "Password Anda Tidak Sama";
+    }elseif (strpos($notif,"register=berhasil")== true) {
+        echo "Selamat Akun Anda Telah Terdaftar";
+    }elseif (strpos($notif,"register=syaratusernameada")== true) {
+        echo "Username Anda Telah Digunakan Oleh Orang Lain";
+    }elseif (strpos($notif,"pesan=pesanterkirim")== true) {
+        echo "Pesan Anda Berhasil Dikirim";
+    }elseif (strpos($notif,"pesan=hapuspesan")== true) {
+        echo "Pesan Anda Berhasil Di Hapus";
+    }elseif (strpos($notif,"pesan=semuahapus")== true) {
+        echo "Semua Pesan Anda Berhasil Di Hapus";
+    }
+?>

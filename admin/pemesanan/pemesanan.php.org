@@ -1,0 +1,62 @@
+
+	<div class="col-md-3">  
+                     <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" />  
+                </div>  
+                <div class="col-md-3">  
+                     <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" />  
+                </div>  
+                <div class="col-md-5">  
+                     <input type="button" name="filter" id="filter" value="filter" class="btn btn-info" />  
+                </div>  
+                <div style="clear:both"></div>     
+
+<h3>Data Event</h3>
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Tool</th>
+			<th>No</th>
+			<th>Nama Depan</th>
+			<th>Nama Belakang</th>
+			<th>Email</th>
+			<th>Alamat</th>
+			<th>Pilihan Paket</th>
+			<th>Kodepaket</th>
+			<th>Jumlah Paket</th>
+			<th>Keterangan</th>
+			<th>Waktu Pemesanan</th>
+			
+
+			
+		</tr>
+	</thead>
+	<tbody>
+<?php $nomor=1; ?>
+		<?php $ambil=$koneksi->query("SELECT * FROM pemesanan"); ?>
+		<?php while ($pecah=$ambil->fetch_assoc()) {
+		?>
+		
+		<tr>
+			<td>
+				<a href="dashboard.php?halaman=hapuspemesanan&id=<?php echo $pecah['id'];?>" class="btn btn-danger" onclick="return confirm('Yakin <?php echo $pecah['namadepan']." ".$pecah['namadepan'];?> ingin di hapus?');" >Hapus</a>
+				<a href="dashboard.php?halaman=terima&id=<?php echo $pecah['id'];?>" class="btn btn-info">Terima</a>
+			</td>
+			<td><?php echo $nomor; ?></td>
+			<td><?php echo $pecah['namadepan']; ?></td>
+			<td><?php echo $pecah['namabelakang']; ?></td>
+			<td><?php echo $pecah['email']; ?></td>
+			<td><?php echo $pecah['alamat']; ?></td>
+			<td><?php echo $pecah['pilihanpaket']; ?></td>
+			<td><?php echo $pecah['kodepaket']; ?></td>
+			<td><?php echo $pecah['jumlahpaket']; ?></td>
+			<td><?php echo $pecah['keterangan']; ?></td>
+			<td><?php echo $pecah['waktupemesanan']; ?></td>
+			
+		</tr>
+		<?php $nomor++; ?>
+		<?php } ?>
+	</tbody>
+</table>
+
+
